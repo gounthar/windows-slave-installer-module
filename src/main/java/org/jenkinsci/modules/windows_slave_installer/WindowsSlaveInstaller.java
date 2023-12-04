@@ -1,5 +1,6 @@
 package org.jenkinsci.modules.windows_slave_installer;
 
+import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import hudson.Launcher.LocalLauncher;
 import hudson.model.TaskListener;
@@ -31,8 +32,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
+import edu.umd.cs.findbugs.annotations.CheckForNull;
 import org.kohsuke.accmod.Restricted;
 import org.kohsuke.accmod.restrictions.NoExternalUse;
 
@@ -162,7 +162,7 @@ public class WindowsSlaveInstaller extends SlaveInstaller {
      * @throws IOException The file cannot be generated or if not all macro variables can be resolved
      * @since TODO
      */
-    public static String generateSlaveXml(String id, String java, String vmargs, String args, @Nonnull Map<String, String> extraMacroValues) throws IOException {
+    public static String generateSlaveXml(String id, String java, String vmargs, String args, @NonNull Map<String, String> extraMacroValues) throws IOException {
         // Just a legacy behavior for the obsolete installer
         String xml = IOUtils.toString(WindowsSlaveInstaller.class.getResourceAsStream("jenkins-slave.xml"), "UTF-8");
         xml = xml.replace("@ID@", id);
@@ -205,7 +205,7 @@ public class WindowsSlaveInstaller extends SlaveInstaller {
     }
       
     /*package*/ static String generateSlaveXml(String id, String java, @CheckForNull String vmargs, 
-                @Nonnull String args, @Nonnull Iterable<MacroValueProvider> providers
+                @NonNull String args, @NonNull Iterable<MacroValueProvider> providers
             ) throws IOException {
         Map<String, String> macroValues = new TreeMap<>();
         for (MacroValueProvider provider : providers) {
@@ -225,14 +225,14 @@ public class WindowsSlaveInstaller extends SlaveInstaller {
     @Restricted(NoExternalUse.class)
     /*package*/ static abstract class MacroValueProvider {
        
-        @Nonnull
+        @NonNull
         public abstract Map<String, String> getMacroValues();
         
-        @Nonnull
+        @NonNull
         public abstract Set<String> getMacroNames();
         
         @CheckForNull
-        public abstract String getDefaulValue(@Nonnull String macroName);
+        public abstract String getDefaulValue(@NonNull String macroName);
         
         static final Collection<MacroValueProvider> allDefaultProviders() {
             return Arrays.<MacroValueProvider>asList(new AgentURLMacroProvider(null));
@@ -245,7 +245,7 @@ public class WindowsSlaveInstaller extends SlaveInstaller {
         private final File rootDir;
         private final String serviceId;
 
-        public ServiceStarterThread(@Nonnull File agentExe, @Nonnull File rootDir, @Nonnull String serviceId) {
+        public ServiceStarterThread(@NonNull File agentExe, @NonNull File rootDir, @NonNull String serviceId) {
             super("Service Starter for " + serviceId);
             this.agentExe = agentExe;
             this.rootDir = rootDir;
@@ -296,7 +296,7 @@ public class WindowsSlaveInstaller extends SlaveInstaller {
             return res;
         }
         
-        @Nonnull
+        @NonNull
         /**package*/ static String generateDownloadMacroValue(@CheckForNull URL remotingURL) {
             String macroValue;
             if (remotingURL != null) {

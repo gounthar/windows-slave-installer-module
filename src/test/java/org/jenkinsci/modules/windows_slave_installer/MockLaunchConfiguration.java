@@ -29,7 +29,7 @@ import org.jenkinsci.modules.slave_installer.LaunchConfiguration;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import javax.annotation.CheckForNull;
+import edu.umd.cs.findbugs.annotations.CheckForNull;
 
 //TODO: consider moving the class to slave_installer module
 /**
